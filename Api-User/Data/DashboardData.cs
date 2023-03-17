@@ -32,7 +32,11 @@ namespace Api_User.Data
                     });
 
                 }
-                return list;
+                return new
+                {
+                    succes = true,
+                    data = list
+                };
             }
         }
     }

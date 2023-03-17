@@ -18,14 +18,15 @@ namespace Api_User.Controllers
             Configuration = configuration;
         }
 
-
-        public IActionResult Amount([FromBody] Dashboard dashboard)
+        [HttpGet]
+        public dynamic GetDashboar()
         {
-            if(dashboard!= null)
-            {
-                
-            }
-            return Ok(dashboard);
+            //dynamic n = DashboardData.GetAmount(Configuration.GetConnectionString("Api_UserContext"));
+
+            //if (n != null)
+            //{/
+            return DashboardData.GetAmount(Configuration.GetConnectionString("Api_UserContext"));
+            //}
         }
         
     }
