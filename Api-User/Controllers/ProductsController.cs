@@ -86,20 +86,7 @@ namespace Api_User.Controllers
         {
             return ProductsData.AddProduct(products, Configuration.GetConnectionString("Api_UserContext"));
         }
-        // PUT: api/Edit/5
-        /*[HttpPut("{id}")]
-        [Route("Edit")]*/
-        /*public dynamic EdittProduct(Products products, long id)
-        {
-            Products p = new Products();
-            p.Id = id;
-            p.Name = products.Name; 
-            p.Description= products.Description;
-            p.Precio= products.Precio;
-            p.Author = products.Author;
-            p.IDCategory= products.IDCategory;
-            return ProductsData.EditProduct(p, Configuration.GetConnectionString("Api_UserContext"));
-        }*/
+
         // PUT: api/Products/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
@@ -151,21 +138,6 @@ namespace Api_User.Controllers
             return NoContent();
         }
         
-        // POST: api/Products
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        /*[HttpPost]
-        public async Task<ActionResult<Products>> PostProducts(Products products)
-        {
-          if (_context.Products == null)
-          {
-              return Problem("Entity set 'Api_UserContext.Products'  is null.");
-          }
-            _context.Products.Add(products);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetProducts", new { id = products.Id }, products);
-        }
-        */
         // DELETE: api/Products/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteProducts(long id)
