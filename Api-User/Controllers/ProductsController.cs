@@ -107,6 +107,7 @@ namespace Api_User.Controllers
             p.Author = products.Author;
             p.IDCategory = products.IDCategory;
             p.quantity = products.quantity;
+            p.Image= products.Image;
             
             //_context.Entry(products).State = EntityState.Modified;
 

@@ -56,7 +56,7 @@ namespace Api_User.Data
             using(conn= new SqlConnection(connection))
             {
                 conn.Open();
-                SqlCommand cmd = new SqlCommand("insert into Products(Name,Description,Precio,Author,IDCategory,Date,Cantidad) values(@name,@description,@precio,@author,@idcategory,GETDATE(),@cantidad)", conn);
+                SqlCommand cmd = new SqlCommand("insert into Products(Name,Description,Precio,Author,IDCategory,Date,Cantidad,Imagen) values(@name,@description,@precio,@author,@idcategory,GETDATE(),@cantidad,@imagen)", conn);
 
                 cmd.Parameters.AddWithValue("@name", products.Name);
                 cmd.Parameters.AddWithValue("@description", products.Description);
@@ -64,6 +64,7 @@ namespace Api_User.Data
                 cmd.Parameters.AddWithValue("@author", products.Author);
                 cmd.Parameters.AddWithValue("@idcategory", products.IDCategory);
                 cmd.Parameters.AddWithValue("@cantidad", products.quantity);
+                cmd.Parameters.AddWithValue("@imagen", products.Image);
 
                 cmd.ExecuteNonQuery();
                 conn.Close();
@@ -79,7 +80,7 @@ namespace Api_User.Data
             using( conn= new SqlConnection(connection))
             {
                 conn.Open();
-                SqlCommand cmd = new SqlCommand("update Products set Name=@name, Description=@description,Precio=@precio,Author=@author,IDCategory=@idcategory,Date=GETDATE(),Cantidad=@cantidad where Id=@id", conn);
+                SqlCommand cmd = new SqlCommand("update Products set Name=@name, Description=@description,Precio=@precio,Author=@author,IDCategory=@idcategory,Date=GETDATE(),Cantidad=@cantidad,Imagen=@imagen where Id=@id", conn);
                 cmd.Parameters.AddWithValue("@id", products.Id);
                 cmd.Parameters.AddWithValue("@name", products.Name);
                 cmd.Parameters.AddWithValue("@description", products.Description);
@@ -87,6 +88,7 @@ namespace Api_User.Data
                 cmd.Parameters.AddWithValue("@author", products.Author);
                 cmd.Parameters.AddWithValue("@idcategory", products.IDCategory);
                 cmd.Parameters.AddWithValue("@cantidad", products.quantity);
+                cmd.Parameters.AddWithValue("@imagen", products.Image);
 
                 cmd.ExecuteNonQuery();
 

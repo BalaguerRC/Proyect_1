@@ -16,12 +16,13 @@ namespace Api_User.Controllers
     public class ProductsPagController:ControllerBase
     {
         private IConfiguration Configuration;
+        private readonly Api_UserContext _context;
         private readonly IUriService UriService;
-        public ProductsPagController(IConfiguration configuration, IUriService uriService)
+        public ProductsPagController(IConfiguration configuration, IUriService uriService, Api_UserContext context)
         {
             Configuration = configuration;
             UriService = uriService;
-            
+            _context = context;
         }
         [HttpGet]
         public async Task<IActionResult> GetAll([FromQuery] PaginationFilter filter)
@@ -41,6 +42,40 @@ namespace Api_User.Controllers
             //return Ok(new PagedResponse<List<Products>>(list,validFilter.PageNumber,validFilter.PageSize));
         }
         //Category
+        [Route("getCategory")]
+        [HttpGet]
+        public async Task<IActionResult> GetAllCategory([FromQuery] PaginationFilter filter)
+        {
+            var route = Request.Path.Value;
+            var validFilter = new PaginationFilter(filter.PageNumber, filter.PageSize);
+            var list = await _context.Categories.Skip((validFilter.PageNumber - 1) * validFilter.PageSize)
+                .Take(validFilter.PageSize).ToListAsync();
+            /*var lista = list.Skip((validFilter.PageNumber - 1) * validFilter.PageSize)
+                .Take(validFilter.PageSize);*/
+            var totalRecord = await _context.Categories.CountAsync();
+
+            var pagedResponse = PaginationHelper.CreatePagedResponse<Category>(list, validFilter, totalRecord, UriService, route);
+
+            return Ok(pagedResponse);
+        }
+        //User
+        [Route("getUser")]
+        [HttpGet]
+        public async Task<IActionResult> GetAllUser([FromQuery] PaginationFilter filter)
+        {
+            var route = Request.Path.Value;
+            var validFilter = new PaginationFilter(filter.PageNumber, filter.PageSize);
+            var list = await _context.User.Skip((validFilter.PageNumber - 1) * validFilter.PageSize)
+                .Take(validFilter.PageSize).ToListAsync();
+            /*var lista = list.Skip((validFilter.PageNumber - 1) * validFilter.PageSize)
+                .Take(validFilter.PageSize);*/
+            var totalRecord = await _context.User.CountAsync();
+
+            var pagedResponse = PaginationHelper.CreatePagedResponse<User>(list, validFilter, totalRecord, UriService, route);
+
+            return Ok(pagedResponse);
+        }
+
     }
     [Authorize]
     [Route("api/[controller]")]
@@ -71,9 +106,6 @@ namespace Api_User.Controllers
             var pagedResponse = PaginationHelper.CreatePagedResponse<Category>(list, validFilter, totalRecord, UriService, route);
 
             return Ok(pagedResponse);
-            //return Ok(list);
-            //return Ok(new PagedResponse<IEnumerable<Products>>(lista, validFilter.PageNumber, validFilter.PageSize));
-            //return Ok(new PagedResponse<List<Products>>(list,validFilter.PageNumber,validFilter.PageSize));
         }
     }
     

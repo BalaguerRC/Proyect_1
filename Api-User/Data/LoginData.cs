@@ -69,37 +69,6 @@ namespace Api_User.Data
                             GenerateToken(userModel, configuration);
                             /*
                             //token
-                            var auth = Authenticate(user);
-                            if (auth== null)
-                            {
-                                
-                            }
-                            var issuer = configuration["Jwt:Issuer"];
-                            var audience = configuration["Jwt:Audience"];
-                            var key = configuration["Jwt:Key"];
-
-                            //generatetoken
-                            var securitykey= new SymmetricSecurityKey(Encoding.ASCII.GetBytes(key));
-
-                            var credentials= new SigningCredentials(securitykey, SecurityAlgorithms.HmacSha512Signature);
-
-                            var claims = new[]
-                            {
-                                new Claim("Id", Guid.NewGuid().ToString()),
-                                new Claim(JwtRegisteredClaimNames.Email, user1.Email),
-                            };
-
-                            var token= new JwtSecurityToken(issuer,
-                                audience,
-                                claims, 
-                                expires: DateTime.Now.AddMinutes(5), 
-                                signingCredentials: credentials);
-                            var tokenHandler = new JwtSecurityTokenHandler();
-
-                            var tokenString= tokenHandler.WriteToken(token);
-                            //authenticate
-
-                            //var currentuser= UserAutenticate.users.FirstOrDefault(x => x.Email.ToLower() == user1.Email.ToLower() && x.Password.ToLower() == user1.Password.ToLower());
 
                             //end token*/
                             exito = true;
