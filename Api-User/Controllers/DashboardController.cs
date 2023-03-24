@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Api_User.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class DashboardController: ControllerBase
