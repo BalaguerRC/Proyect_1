@@ -101,6 +101,28 @@ namespace Api_User.Data
                 };
             }
         }
+
+        public static dynamic BuyProduct(Products products, string connection)
+        {
+            using( conn= new SqlConnection(connection)) 
+            { 
+                conn.Open();
+                SqlCommand cmd = new SqlCommand(" update Products set Cantidad=@cantidad where Id=@id", conn);
+                cmd.Parameters.AddWithValue("@id", products.Id);
+                cmd.Parameters.AddWithValue("@cantidad", products.quantity);
+
+                cmd.ExecuteNonQuery();
+
+                conn.Close();
+
+                return new
+                {
+                    succes = true,
+                    message = "Bought"
+                };
+
+            }
+        }
         public static dynamic DeleteProduct(long id, string connection)
         {
             try
@@ -140,7 +162,7 @@ namespace Api_User.Data
                 {
                     Products products = new Products();
                     conn.Open();
-                    SqlCommand cmd = new SqlCommand("Select pr.Id,pr.Name,pr.Description,pr.Precio,pr.Author,c.Name,pr.Date from Products pr join Categories c on pr.IDCategory=c.Id where pr.Id=@id", conn);
+                    SqlCommand cmd = new SqlCommand("Select pr.Id,pr.Name,pr.Description,pr.Precio,pr.Author,c.Name,pr.Date,pr.Cantidad,pr.Imagen from Products pr join Categories c on pr.IDCategory=c.Id where pr.Id=@id", conn);
                     cmd.Parameters.AddWithValue("@id", id);
 
                     SqlDataReader reader = cmd.ExecuteReader();
@@ -160,6 +182,8 @@ namespace Api_User.Data
                             products.Author = reader2.GetString(4);
                             products.Category = reader2.GetString(5);
                             products.Date = reader2.GetDateTime(6);
+                            products.quantity = reader2.GetInt32(7);
+                            products.Image= reader2.IsDBNull(8) ? null : reader2.GetString(8);
                             //});
                         }
                         reader2.Close();

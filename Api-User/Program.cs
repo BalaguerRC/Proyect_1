@@ -38,6 +38,13 @@ builder.Services.AddSingleton<IUriService>(o =>
     var uri = string.Concat(request.Scheme, "://", request.Host.ToUriComponent());
     return new UriServics(uri);
 });
+builder.Services.AddSingleton<IUriServiceClient>(o =>
+{
+    var accessor = o.GetRequiredService<IHttpContextAccessor>();
+    var request = accessor.HttpContext.Request;
+    var uri = string.Concat(request.Scheme, "://", request.Host.ToUriComponent());
+    return new UriServicsClient(uri);
+});
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

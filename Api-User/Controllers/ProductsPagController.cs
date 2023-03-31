@@ -18,11 +18,13 @@ namespace Api_User.Controllers
         private IConfiguration Configuration;
         private readonly Api_UserContext _context;
         private readonly IUriService UriService;
-        public ProductsPagController(IConfiguration configuration, IUriService uriService, Api_UserContext context)
+        private readonly IUriServiceClient UriServiceClient;
+        public ProductsPagController(IConfiguration configuration, IUriService uriService, Api_UserContext context, IUriServiceClient uriServiceClient)
         {
             Configuration = configuration;
             UriService = uriService;
             _context = context;
+            UriServiceClient = uriServiceClient;
         }
         [HttpGet]
         public async Task<IActionResult> GetAll([FromQuery] PaginationFilter filter)
@@ -35,6 +37,53 @@ namespace Api_User.Controllers
             var totalRecord= list.Count();
 
             var pagedResponse = PaginationHelper.CreatePagedResponse<Products>(lista, validFilter, totalRecord, UriService, route);
+
+            return Ok(pagedResponse);
+            //return Ok(lista);
+            //return Ok(new PagedResponse<IEnumerable<Products>>(lista, validFilter.PageNumber, validFilter.PageSize));
+            //return Ok(new PagedResponse<List<Products>>(list,validFilter.PageNumber,validFilter.PageSize));
+        }
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutProducts(long id, Products products)
+        {
+            if (id == null)
+            {
+                return BadRequest();
+            }
+            Products p = new Products();
+            p.Id = id;
+            p.Name = products.Name;
+            p.Description = products.Description;
+            p.Precio = products.Precio;
+            p.Author = products.Author;
+            p.IDCategory = products.IDCategory;
+            p.quantity = products.quantity;
+            p.Image = products.Image;
+
+            dynamic n = ProductsData.BuyProduct(p, Configuration.GetConnectionString("Api_UserContext"));
+            if (n.succes == true)
+            {
+                return Ok(n);
+            }
+            else
+            {
+                return Ok(n.message);
+            }
+            //return NotFound();
+        }
+
+        [Route("getProductClient")]
+        [HttpGet]
+        public async Task<IActionResult> GetAllProduct([FromQuery] PaginationFilterClient filter)
+        {
+            var route = Request.Path.Value;
+            var validFilter = new PaginationFilterClient(filter.PageNumber, filter.PageSize);
+            var list = ProductsData.GetProducts(Configuration.GetConnectionString("Api_UserContext"));
+            var lista = list.Skip((validFilter.PageNumber - 1) * validFilter.PageSize)
+                .Take(validFilter.PageSize);
+            var totalRecord = list.Count();
+
+            var pagedResponse = PaginationHelperClient.CreatePagedResponse<Products>(lista, validFilter, totalRecord, UriServiceClient, route);
 
             return Ok(pagedResponse);
             //return Ok(lista);

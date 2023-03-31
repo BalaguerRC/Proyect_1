@@ -73,6 +73,8 @@ namespace Api_User.Controllers
                 return NotFound();
             }
         }
+
+
         [HttpGet]
         //[Route("getproduct")]
         public List<Products> GetProducto()
@@ -86,7 +88,6 @@ namespace Api_User.Controllers
         {
             return ProductsData.AddProduct(products, Configuration.GetConnectionString("Api_UserContext"));
         }
-
         // PUT: api/Products/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
