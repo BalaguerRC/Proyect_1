@@ -13,7 +13,7 @@ namespace Api_User.Controllers
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
-    public class ProductsPagController:ControllerBase
+    public class ProductsPagController : ControllerBase
     {
         private IConfiguration Configuration;
         private readonly Api_UserContext _context;
@@ -32,9 +32,9 @@ namespace Api_User.Controllers
             var route = Request.Path.Value;
             var validFilter = new PaginationFilter(filter.PageNumber, filter.PageSize);
             var list = ProductsData.GetProducts(Configuration.GetConnectionString("Api_UserContext"));
-            var lista= list.Skip((validFilter.PageNumber-1)*validFilter.PageSize)
+            var lista = list.Skip((validFilter.PageNumber - 1) * validFilter.PageSize)
                 .Take(validFilter.PageSize);
-            var totalRecord= list.Count();
+            var totalRecord = list.Count();
 
             var pagedResponse = PaginationHelper.CreatePagedResponse<Products>(lista, validFilter, totalRecord, UriService, route);
 
@@ -42,6 +42,27 @@ namespace Api_User.Controllers
             //return Ok(lista);
             //return Ok(new PagedResponse<IEnumerable<Products>>(lista, validFilter.PageNumber, validFilter.PageSize));
             //return Ok(new PagedResponse<List<Products>>(list,validFilter.PageNumber,validFilter.PageSize));
+        }
+        [HttpGet("{name}")]
+        public async Task<ActionResult<Products>> GetIdProduct(string name)
+        {
+            try
+            {
+                dynamic n = ProductsData.GetIdProduct(name, Configuration.GetConnectionString("Api_UserContext"));
+                if (n.success == true)
+                {
+                    return Ok(n);
+                }
+                else
+                {
+                    return NotFound();
+                }
+            }
+            catch (Exception)
+            {
+
+                return NotFound();
+            }
         }
         [HttpPut("{id}")]
         public async Task<IActionResult> PutProducts(long id, Products products)

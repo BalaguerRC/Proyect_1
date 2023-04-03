@@ -101,6 +101,7 @@ namespace Api_User.Data
                 };
             }
         }
+       
 
         public static dynamic BuyProduct(Products products, string connection)
         {
@@ -152,6 +153,32 @@ namespace Api_User.Data
                 };
             }
             
+        }
+        public static dynamic GetIdProduct(string name,string connection)
+        {
+            int id=0;
+            using ( conn= new SqlConnection(connection))
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand("Select Id from Products where Name=@name", conn);
+                cmd.Parameters.AddWithValue("@name", name);
+
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    id = Convert.ToInt32(reader["ID"]);
+                }
+                reader.Close();
+                reader.Dispose();
+
+                conn.Close();
+
+                return new
+                {
+                    success = true,
+                    Data = id
+                };
+            }
         }
 
         public static dynamic GetIDProduct(long id, string connection)
