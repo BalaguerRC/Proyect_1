@@ -88,7 +88,11 @@ namespace Api_User.Data
                 cmd.Parameters.AddWithValue("@author", products.Author);
                 cmd.Parameters.AddWithValue("@idcategory", products.IDCategory);
                 cmd.Parameters.AddWithValue("@cantidad", products.quantity);
-                cmd.Parameters.AddWithValue("@imagen", products.Image);
+                cmd.Parameters.AddWithValue("@imagen", products.Image ?? (object)DBNull.Value);
+                /*if (products.Image == null)
+                {
+
+                }*/
 
                 cmd.ExecuteNonQuery();
 

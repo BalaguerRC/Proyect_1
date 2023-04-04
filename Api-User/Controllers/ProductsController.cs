@@ -136,8 +136,6 @@ namespace Api_User.Controllers
                     throw;
                 }
             }
-
-            return NoContent();
         }
         
         // DELETE: api/Products/5
