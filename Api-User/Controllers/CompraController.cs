@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Configuration;
 using System.Security.Claims;
 
 namespace Api_User.Controllers
@@ -31,11 +32,13 @@ namespace Api_User.Controllers
                 dato = compra.id_compra
             };
         }
+        
         [HttpGet("{id}")]
         public dynamic GetCompraById(int id)
         {
             return CompraData.getCompraById(id, Configuration.GetConnectionString("Api_UserContext"));
         }
+
         [HttpGet]
         public dynamic GetMaxId()
         {
@@ -56,6 +59,38 @@ namespace Api_User.Controllers
                 return NotFound();
             }
             return await _context.Compra.ToListAsync();
+        }
+    }
+
+    [Authorize]
+    [Route("api/[controller]")]
+    [ApiController]
+    public class Compra2Controller : ControllerBase
+    {
+        private IConfiguration Configuration;
+        public Compra2Controller(IConfiguration configuration) {
+            Configuration= configuration;
+        }
+        [HttpGet("{id}")]
+        public dynamic GetIdCompraByIdU(int id)
+        {
+            return CompraData.getIdCompraByIdU(id, Configuration.GetConnectionString("Api_UserContext"));
+        }
+    }
+    [Authorize]
+    [Route("api/[controller]")]
+    [ApiController]
+    public class CompraClientController : ControllerBase
+    {
+        private IConfiguration Configuration;
+        public CompraClientController(IConfiguration configuration)
+        {
+            Configuration = configuration;
+        }
+        [HttpGet("{id}")]
+        public dynamic GetCompraClient(int id)
+        {
+            return CompraData.getComprasClient(id, Configuration.GetConnectionString("Api_UserContext"));
         }
     }
 }

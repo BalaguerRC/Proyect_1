@@ -12,6 +12,8 @@ namespace Api_User.Models
         public string? productName { get; set; }
         public int amount { get; set; }
         public string? price { get; set; }
+        public string? Total { get; set; }
+
 
         public DateTime date { get; set; }
     }
@@ -25,5 +27,21 @@ namespace Api_User.Models
         public string? total_price { get; set; }
 
         public DateTime date { get; set; }
+    }
+    public class CompraByID
+    {
+        [Key]
+        public int? id_compra { get; set; }
+        public DateTime date { get; set; }
+    }
+    public class CombreClient
+    {
+        [Key]
+        public int id_product { get; set; }
+        public string? productName { get; set; }
+        public int amount { get; set; }
+        public string? price { get; set; }
+
+        public string? total_price { get; set; }
     }
 }
