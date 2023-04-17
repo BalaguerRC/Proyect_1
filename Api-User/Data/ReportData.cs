@@ -62,5 +62,36 @@ namespace Api_User.Data
                 };
             }
         }
+
+        public static List<Report> GetReport(string connection)
+        {
+            List<Report> list = new List<Report>();
+            using(conn= new SqlConnection(connection))
+            {
+                conn.Open();
+
+                SqlCommand cmd = new SqlCommand("select Id,id_compra,total_price,date from Report", conn);
+
+                SqlDataReader reader= cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    list.Add(new Report()
+                    {
+                        Id = reader.GetInt32(0),
+                        id_compra = reader.GetInt32(1),
+                        total_price = reader.GetString(2),
+                        date= reader.GetDateTime(3),
+                    });
+                }
+
+                reader.Close();
+                reader.Dispose();
+
+                conn.Close();
+
+                return list;
+            }
+        }
     }
 }
