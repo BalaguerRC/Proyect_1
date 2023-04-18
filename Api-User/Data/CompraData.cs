@@ -67,7 +67,7 @@ namespace Api_User.Data
             {
                 conn.Open();
 
-                SqlCommand cmd = new SqlCommand("select id_compra,date from Compra where id_user=@id", conn);
+                SqlCommand cmd = new SqlCommand("select id_compra,total_price,date from Compra where id_user=@id", conn);
 
                 cmd.Parameters.AddWithValue("@id", id);
 
@@ -78,7 +78,8 @@ namespace Api_User.Data
                     List.Add(new CompraByID
                     {
                         id_compra = reader.GetInt32(0),
-                        date = reader.GetDateTime(1)
+                        total_price= reader.IsDBNull(1) ? null: reader.GetString(1),
+                        date = reader.GetDateTime(2)
                     });
                 }
 

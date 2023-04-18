@@ -32,6 +32,8 @@ namespace Api_User.Models
     {
         [Key]
         public int? id_compra { get; set; }
+        public string? total_price { get; set; }
+
         public DateTime date { get; set; }
     }
     public class CombreClient
