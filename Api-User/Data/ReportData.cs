@@ -39,27 +39,36 @@ namespace Api_User.Data
             string total= "no existe";
             using(conn=new SqlConnection(connection))
             {
-                conn.Open();
-
-                SqlCommand cmd = new SqlCommand("select total_price from Report where id_compra=@id", conn);
-
-                cmd.Parameters.AddWithValue("@id", id);
-
-                SqlDataReader reader = cmd.ExecuteReader();
-                while(reader.Read())
+                try
                 {
-                    total= reader.GetString(0);
+                    conn.Open();
+
+                    SqlCommand cmd = new SqlCommand("select total_price from Report where id_compra=@id", conn);
+
+                    cmd.Parameters.AddWithValue("@id", id);
+
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    while(reader.Read())
+                    {
+                        total= reader.GetString(0);
+                    }
+                    reader.Close();
+                    reader.Dispose();
+
+                    return new
+                    {
+                        success = true,
+                        Data = total
+                    };
                 }
-                reader.Close();
-                reader.Dispose();
-
-                conn.Close();
-
-                return new
+                catch (Exception)
                 {
-                    success = true,
-                    Data = total
-                };
+                    return new
+                    {
+                        success = false,
+                        Data = total
+                    };
+                }
             }
         }
 

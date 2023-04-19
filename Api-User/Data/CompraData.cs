@@ -65,34 +65,46 @@ namespace Api_User.Data
             List<CompraByID> List = new List<CompraByID>();
             using (conn=new SqlConnection(connection))
             {
-                conn.Open();
-
-                SqlCommand cmd = new SqlCommand("select id_compra,total_price,date from Compra where id_user=@id", conn);
-
-                cmd.Parameters.AddWithValue("@id", id);
-
-                SqlDataReader reader= cmd.ExecuteReader();
-
-                while(reader.Read())
+                try
                 {
-                    List.Add(new CompraByID
+                    conn.Open();
+
+                    SqlCommand cmd = new SqlCommand("select id_compra,total_price,date from Compra where id_user=@id", conn);
+
+                    cmd.Parameters.AddWithValue("@id", id);
+
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
                     {
-                        id_compra = reader.GetInt32(0),
-                        total_price= reader.IsDBNull(1) ? null: reader.GetString(1),
-                        date = reader.GetDateTime(2)
-                    });
+                        List.Add(new CompraByID
+                        {
+                            id_compra = reader.GetInt32(0),
+                            total_price = reader.IsDBNull(1) ? null : reader.GetString(1),
+                            date = reader.GetDateTime(2)
+                        });
+                    }
+
+                    reader.Close();
+                    reader.Dispose();
+
+                    conn.Close();
+
+                    return new
+                    {
+                        success = true,
+                        data = List
+                    };
                 }
-
-                reader.Close();
-                reader.Dispose();
-
-                conn.Close();
-
-                return new
+                catch (Exception)
                 {
-                    success = true,
-                    data= List
-                };
+                    return new
+                    {
+                        success = true,
+                        data = "nada"
+                    };
+                }
+                
             }
         }
         //admin
@@ -198,6 +210,11 @@ namespace Api_User.Data
                 {
                     id =reader.IsDBNull(0) ? 0: reader.GetInt32(0);
                 }
+
+                reader.Close();
+                reader.Dispose();
+
+                conn.Close();
 
                 return new 
                 { 
