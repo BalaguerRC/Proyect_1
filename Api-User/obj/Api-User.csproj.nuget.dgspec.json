@@ -1,23 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\j.saldivar\\source\\repos\\Api-User\\Api-User\\Api-User.csproj": {}
+    "C:\\Project-DGA\\27 04 23\\Proyect_1\\Api-User\\Api-User.csproj": {}
   },
   "projects": {
-    "C:\\Users\\j.saldivar\\source\\repos\\Api-User\\Api-User\\Api-User.csproj": {
+    "C:\\Project-DGA\\27 04 23\\Proyect_1\\Api-User\\Api-User.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\j.saldivar\\source\\repos\\Api-User\\Api-User\\Api-User.csproj",
+        "projectUniqueName": "C:\\Project-DGA\\27 04 23\\Proyect_1\\Api-User\\Api-User.csproj",
         "projectName": "Api-User",
-        "projectPath": "C:\\Users\\j.saldivar\\source\\repos\\Api-User\\Api-User\\Api-User.csproj",
-        "packagesPath": "C:\\Users\\j.saldivar\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\j.saldivar\\source\\repos\\Api-User\\Api-User\\obj\\",
+        "projectPath": "C:\\Project-DGA\\27 04 23\\Proyect_1\\Api-User\\Api-User.csproj",
+        "packagesPath": "C:\\Users\\dell\\.nuget\\packages\\",
+        "outputPath": "C:\\Project-DGA\\27 04 23\\Proyect_1\\Api-User\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
         "configFilePaths": [
-          "C:\\Users\\j.saldivar\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\dell\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -93,7 +90,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.201\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.202\\RuntimeIdentifierGraph.json"
         }
       }
     }
