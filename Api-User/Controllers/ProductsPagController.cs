@@ -10,7 +10,6 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Api_User.Controllers
 {
-    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class ProductsPagController : ControllerBase

@@ -12,7 +12,6 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Api_User.Controllers
 {
-    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class ProductsController : ControllerBase
@@ -73,8 +72,7 @@ namespace Api_User.Controllers
                 return NotFound();
             }
         }
-
-
+        [Authorize]
         [HttpGet]
         //[Route("getproduct")]
         public List<Products> GetProducto()
@@ -82,6 +80,7 @@ namespace Api_User.Controllers
             //string connectionString = Configuration.GetConnectionString("Api_UserContext");
             return ProductsData.GetProducts(Configuration.GetConnectionString("Api_UserContext"));
         }
+        [Authorize]
         [HttpPost]
         //[Route("getproduct")]
         public dynamic AddProduct([FromBody] Products products)
@@ -90,6 +89,7 @@ namespace Api_User.Controllers
         }
         // PUT: api/Products/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Authorize]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutProducts(long id, Products products)
         {
@@ -137,8 +137,9 @@ namespace Api_User.Controllers
                 }
             }
         }
-        
+
         // DELETE: api/Products/5
+        [Authorize]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteProducts(long id)
         {

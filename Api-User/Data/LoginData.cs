@@ -112,7 +112,7 @@ namespace Api_User.Data
                 issuer,
                 audience,
                 claims,
-                expires: DateTime.Now.AddMinutes(5),
+                expires: DateTime.Now.AddMinutes(20),
                 signingCredentials: credentials);
             var tokenHandler = new JwtSecurityTokenHandler();
 
