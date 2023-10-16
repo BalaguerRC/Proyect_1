@@ -168,4 +168,28 @@ namespace Api_User.Controllers
             return (_context.Categories?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
+    [Route("api/[controller]")]
+    [ApiController]
+    public class CategorieController : ControllerBase
+    {
+        private readonly Api_UserContext _context;
+        private IConfiguration Configuration;
+
+        public CategorieController(Api_UserContext context, IConfiguration configuration)
+        {
+            _context = context;
+            Configuration = configuration;
+        }
+
+        // GET: api/Categories
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Category>>> GetCategories()
+        {
+            if (_context.Categories == null)
+            {
+                return NotFound();
+            }
+            return await _context.Categories.ToListAsync();
+        }
+    }
 }
