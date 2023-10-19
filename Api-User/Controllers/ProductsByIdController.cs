@@ -10,8 +10,9 @@ using Api_User.Models;
 using System.Configuration;
 using Microsoft.AspNetCore.Authorization;
 using Api_User.Services.NewFolder;
-using Api_User.Wrappers.Filter;
 using Api_User.Services;
+using Api_User.Wrappers;
+using Api_User.Wrappers.Filter;
 
 namespace Api_User.Controllers
 {
@@ -66,24 +67,23 @@ namespace Api_User.Controllers
         private IConfiguration Configuration;
         private readonly IUriService UriService;
         private readonly IUriServiceClient UriServiceClient;
-        public ProductsByIdPageController(Api_UserContext context, IConfiguration configuration, IUriService uriService, IUriServiceClient uriServiceClient)
+        public ProductsByIdPageController(Api_UserContext context, IConfiguration configuration, IUriServiceClient uriServiceClient)
         {
             _context = context;
             Configuration = configuration;
-            UriService = uriService;
             UriServiceClient = uriServiceClient;
         }
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetAll([FromQuery] PaginationFilter filter, long id)
+        public async Task<IActionResult> GetAll([FromQuery] PaginationFilterClient filter, long id)
         {
             var route = Request.Path.Value;
-            var validFilter = new PaginationFilter(filter.PageNumber, filter.PageSize);
+            var validFilter = new PaginationFilterClient(filter.PageNumber, filter.PageSize);
             var list = CategoryData.GetProductByIDPage(id,Configuration.GetConnectionString("Api_UserContext"));
             var lista = list.Skip((validFilter.PageNumber - 1) * validFilter.PageSize)
                 .Take(validFilter.PageSize);
             var totalRecord = list.Count();
 
-            var pagedResponse = PaginationHelper.CreatePagedResponse<Products>(lista, validFilter, totalRecord, UriService, route);
+            var pagedResponse = PaginationHelperClient.CreatePagedResponse<Products>(lista, validFilter, totalRecord, UriServiceClient, route);
 
             return Ok(pagedResponse);
             //return Ok(lista);
