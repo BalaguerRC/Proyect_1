@@ -44,6 +44,12 @@ namespace Api_User.Controllers
 
             return await _context.Products.ToListAsync();
         }*/
+        [Route("search")]
+        [HttpGet]
+        public List<ProducstSearch> GetProductForSearch()
+        {
+            return ProductsData.GetProductsSearch(Configuration.GetConnectionString("Api_UserContext"));
+        }
 
         // GET: api/Products/5
         [HttpGet("{id}")]

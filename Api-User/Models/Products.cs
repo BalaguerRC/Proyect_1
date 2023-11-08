@@ -16,6 +16,12 @@ namespace Api_User.Models
         public int quantity { get; set; }
         public string? Image { get; set; }
     }
+    public class ProducstSearch
+    {
+        [Key]
+        public long Id { get; set; }
+        public string? Name { get; set; }
+    }
 
     public class ProductsModel
     {

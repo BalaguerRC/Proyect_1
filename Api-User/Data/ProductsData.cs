@@ -17,7 +17,40 @@ namespace Api_User.Data
         {
             Configuration = configuration;
             //connectionString = Configuration.GetConnectionString("Api_UserContext");
-        }  
+        }
+        public static dynamic GetProductsSearch(string connection)
+        {
+            List<ProducstSearch> list = new List<ProducstSearch>();
+            try
+            {
+                conn = new SqlConnection(connection);
+                conn.Open();
+
+                SqlCommand cmd = new SqlCommand("select Id,Name from Products", conn);
+
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    list.Add(new ProducstSearch
+                    {
+                        Id = Convert.ToInt32(reader.GetInt64(0)),
+                        Name = reader.GetString(1),
+                    });
+                }
+                reader.Close();
+                reader.Dispose();
+
+                conn.Close();
+
+                return list;
+            }
+            catch (Exception)
+            {
+                return list;
+            }
+
+        }
         public static List<Products> GetProducts(string connection)
         {
             List<Products> list = new List<Products>();

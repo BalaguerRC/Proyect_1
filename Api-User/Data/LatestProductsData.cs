@@ -142,4 +142,49 @@ namespace Api_User.Data
             }
         }
     }
+    public class LatesShoesData
+    {
+        static SqlConnection conn;
+        private IConfiguration Configuration;
+        //public static string connectionString;
+        public LatesShoesData(IConfiguration configuration)
+        {
+            Configuration = configuration;
+            //connectionString = Configuration.GetConnectionString("Api_UserContext");
+        }
+        public static dynamic GetLatestShoes(string connection)
+        {
+            List<LatestShoes> list = new List<LatestShoes>();
+
+            try
+            {
+                conn = new SqlConnection(connection);
+                conn.Open();
+
+                SqlCommand cmd = new SqlCommand("select top 4 Id,Name,Imagen from Products where IDCategory=10009 order by Date desc", conn);
+
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    list.Add(new LatestShoes
+                    {
+                        Id = Convert.ToInt32(reader.GetInt64(0)),
+                        Name = reader.GetString(1),
+                        Image = reader.IsDBNull(2) ? null : reader.GetString(2),
+                    });
+                }
+                reader.Close();
+                reader.Dispose();
+
+                conn.Close();
+
+                return list;
+            }
+            catch (Exception)
+            {
+                return list;
+            }
+        }
+    }
 }

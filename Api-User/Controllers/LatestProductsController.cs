@@ -38,5 +38,11 @@ namespace Api_User.Controllers
         {
             return LatestElectronicsData.GetLatestElectronics(Configuration.GetConnectionString("Api_UserContext"));
         }
+        [Route("shoes")]
+        [HttpGet]
+        public List<LatestShoes> GetLatestShoes()
+        {
+            return LatesShoesData.GetLatestShoes(Configuration.GetConnectionString("Api_UserContext"));
+        }
     }
 }

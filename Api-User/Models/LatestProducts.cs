@@ -22,4 +22,16 @@
         public string? Name { get; set; }
         public string Image { get; set; }
     }
+    public class LatestClothes
+    {
+        public int Id { get; set; }
+        public string? Name { get; set; }
+        public string Image { get; set; }
+    }
+    public class LatestShoes
+    {
+        public int Id { get; set; }
+        public string? Name { get; set; }
+        public string Image { get; set; }
+    }
 }
